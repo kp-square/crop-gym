@@ -17,11 +17,11 @@ class FertilizationEnv(gym.Env):
          beta=10, seed=0, fixed_year=None, fixed_location=None):
         self.action_space = gym.spaces.Discrete(7)
         self.observation_space = gym.spaces.Box(low=-np.inf, high=np.inf, shape=(53,))
-        crop = pcse.fileinput.PCSEFileReader(os.path.join(DATA_DIR, "crop",
+        crop = pcse.input.PCSEFileReader(os.path.join(DATA_DIR, "crop",
                                                           "lintul3_winterwheat.crop"))
-        soil = pcse.fileinput.PCSEFileReader(os.path.join(DATA_DIR, "soil",
+        soil = pcse.input.PCSEFileReader(os.path.join(DATA_DIR, "soil",
                                                           "lintul3_springwheat.soil"))
-        site = pcse.fileinput.PCSEFileReader(os.path.join(DATA_DIR, "site",
+        site = pcse.input.PCSEFileReader(os.path.join(DATA_DIR, "site",
                                                           "lintul3_springwheat.site"))
         self.parameterprovider = pcse.base.ParameterProvider(soildata=soil, cropdata=crop,
                                                              sitedata=site)
@@ -138,7 +138,7 @@ class FertilizationEnv(gym.Env):
             latitude = self.np_random.choice([51.5, 52, 52.5])
             longitude = self.np_random.choice([5, 5.5, 6])
             location = (latitude, longitude)
-        return pcse.db.NASAPowerWeatherDataProvider(*location)
+        return pcse.input.NASAPowerWeatherDataProvider(*location)
 
     @staticmethod
     def _get_train_weather_data():
